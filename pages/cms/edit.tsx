@@ -7,8 +7,10 @@ const fetchGitSave = (update: apiRequestUpdateContent) => {
     return fetch('/api/content', {
         method: 'POST',
         body: JSON.stringify(update)
-    }).then(
+    }).then(r => r.json())
+        .then(
         r => {
+            console.log(r);
             return r;
         }
     ).catch(e => {

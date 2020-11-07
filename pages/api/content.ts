@@ -1,3 +1,4 @@
+import { apiRequestUpdateContent } from "./../../lib/apiTypes";
 import { getSession } from "next-auth/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import GitApi from "../../lib/GitApi";
@@ -5,12 +6,9 @@ import GitApi from "../../lib/GitApi";
 //Says Hi to Roy, or the logged in user.
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession({ req });
-
-	let repo;
-	let branch;
-	let filePath;
-	let content;
-	let git = GitApi(repo, branch);
+	let { content, filePath, repo }: apiRequestUpdateContent =
+		"GET" == req.method ? req.query : JSON.parse(req.body);
+	let git = GitApi(repo, "master");
 	if ("GET" === req.method) {
 		try {
 			let r = await git.getFile(filePath);
@@ -23,11 +21,12 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 		}
 	} else if (["PUT", "POST"].includes(req.method)) {
 		try {
-			let r = await git.saveFile(filePath, content, `Save ${filePath}`);
+			let r = await git.saveFile(content, filePath, `Save ${filePath}`);
 			res.json({ r });
 
 			return res;
 		} catch (error) {
+			console.log(error);
 			return res.status(201).json({ error });
 		}
 	} else if ("DELETE" === req.method) {
