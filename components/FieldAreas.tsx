@@ -8,11 +8,12 @@ export interface TextInputProps  {
     label: string;
     id?: string;
     defaultValue?: string;
+    disabled?: boolean;
 }
 
 export const TextInput : FC<TextInputProps> = forwardRef((props, ref) => {
-    const { label, id,defaultValue } = props;
-    let { labelProps, inputProps } = useTextField({ label, defaultValue,id },
+    const { label, id,defaultValue,disabled } = props;
+    let { labelProps, inputProps } = useTextField({ label, defaultValue,id,disabled },
         //@ts-ignore
         ref
     );

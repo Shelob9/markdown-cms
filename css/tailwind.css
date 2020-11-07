@@ -35,3 +35,11 @@ select:hover {
 select:focus {
 	@apply shadow-outline outline-none;
 }
+
+.btn-primary {
+	@apply bg-blue-500 text-white font-bold py-2 px-4 border-b-4 border-blue-700 rounded;
+}
+
+.btn-primary:hover {
+	@apply bg-blue-400 border-blue-500;
+}

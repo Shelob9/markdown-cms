@@ -11,7 +11,6 @@ const fetchGitSave = (update: apiRequestUpdateContent) => {
     }).then(r => r.json())
         .then(
         r => {
-            console.log(r);
             return r;
         }
     ).catch(e => {
@@ -21,9 +20,8 @@ const fetchGitSave = (update: apiRequestUpdateContent) => {
 }
 
 const Edit = ({ name, path,content}) => {
-    const onSave = (data:saveData) => {
-        console.log(data);
-        fetchGitSave({
+    const onSave = async (data:saveData) => {
+        return fetchGitSave({
             content: data.content,
             filePath: data.filePath,
             repo: {
