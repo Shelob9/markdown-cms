@@ -2,6 +2,7 @@ import * as React from 'react';
 import Main from '../../components/Main';
 import Editor, { saveData } from '../../components/Editor';
 import { apiRequestUpdateContent } from '../../lib/apiTypes';
+import GitApi from '../../lib/GitApi';
 
 const fetchGitSave = (update: apiRequestUpdateContent) => {
     return fetch('/api/content', {
@@ -19,7 +20,7 @@ const fetchGitSave = (update: apiRequestUpdateContent) => {
     })
 }
 
-const Edit = () => {
+const Edit = ({ name, path,content}) => {
     const onSave = (data:saveData) => {
         console.log(data);
         fetchGitSave({
@@ -32,8 +33,27 @@ const Edit = () => {
         })
      }
     return (
-        <Editor onSave={onSave} /> 
+        <Editor onSave={onSave} initialContent={content} initialPath={path} /> 
     )
 }
+
+export async function getServerSideProps({ query }) {
+
+    let { name, path } = query;
+    let content = '';
+    if (name && path) {
+        let git = GitApi({ owner: "shelob9", repo: "meadow-foam" }, "master");
+        try {
+            let file = await git.getFile(path);
+            content = file.content;
+        } catch (error) {
+            console.log(error);
+            throw error;
+        }
+    }
+    return {
+        props: { name, path,content },
+    }
+  }
   
 export default Edit;

@@ -1,8 +1,8 @@
 import React,{ FC, forwardRef,  useRef } from 'react';
 import CmsLayout from './CmsLayout';
-import { TextInput,TextArea, TextInputProps } from './FieldAreas';
+import { TextInput,TextArea, TextInputProps, TextAreaProps } from './FieldAreas';
 
-const ContentField: FC<TextInputProps> = forwardRef((props, ref) => (<TextArea {...{
+const ContentField: FC<TextAreaProps> = forwardRef((props, ref) => (<TextArea {...{
     ...props,
     required: true,
 }}
@@ -19,21 +19,15 @@ const TitleField: FC<TextInputProps> = forwardRef((props, ref) => (
     />
 ));
 
-const FileNameField : FC<TextInputProps> = forwardRef((props, ref) => (
-    <TextInput {...{
-        ...props,
-        required:true,
-    }}
-        //@ts-ignore
-        ref={ref}
-    />
-));
+
 
 export type saveData = { title: string, content: string, filePath: string };
 export type editorProps = {
-    onSave: (update:saveData) => void;
+    onSave: (update: saveData) => void;
+    initialPath?: string;
+    initialContent?: string;
 };
-const Editor : FC<editorProps> = ({onSave}) => {
+const Editor : FC<editorProps> = ({onSave,initialPath,initialContent}) => {
     let titleRef = useRef<HTMLInputElement>();
     let contentRef = useRef<HTMLTextAreaElement>();
     let filePathRef = useRef<HTMLInputElement>();
@@ -49,12 +43,26 @@ const Editor : FC<editorProps> = ({onSave}) => {
             }}>
                 Save
              </button>
-                </>
+        </>
         )}>
             
-            <TitleField label="Title" ref={titleRef} id={'the-title'} />
-            <FileNameField label={'File Name'} ref={filePathRef} id={'file-name'} />
-            <ContentField label={'Content'} ref={contentRef} id={'the-content'} />
+            <TitleField
+                label="Title"
+                ref={titleRef}
+                id={'the-title'}
+            />
+            <TextInput
+                label={'File Name'}
+                ref={filePathRef}
+                id={'file-name'}
+                defaultValue={initialPath}
+            />
+            <ContentField
+                label={'Content'}
+                ref={contentRef}
+                id={'the-content'}
+                defaultValue={initialContent}
+            />
         </CmsLayout>
     )
 }
