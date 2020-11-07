@@ -20,7 +20,6 @@ const fetchGitSave = (update: apiRequestUpdateContent) => {
 }
 
 const Edit = () => {
-
     const onSave = (data:saveData) => {
         console.log(data);
         fetchGitSave({
@@ -33,9 +32,7 @@ const Edit = () => {
         })
      }
     return (
-        <Main>
-            <Editor onSave={onSave} />
-        </Main>
+        <Editor onSave={onSave} /> 
     )
 }
   

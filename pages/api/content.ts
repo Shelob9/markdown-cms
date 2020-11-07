@@ -3,7 +3,6 @@ import { getSession } from "next-auth/client";
 import { NextApiRequest, NextApiResponse } from "next";
 import GitApi from "../../lib/GitApi";
 
-//Says Hi to Roy, or the logged in user.
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession({ req });
 	let { content, filePath, repo }: apiRequestUpdateContent =

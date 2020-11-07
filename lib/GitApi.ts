@@ -67,9 +67,31 @@ function GitApi(gitRepo: gitRepoDetails, branch: string) {
 			});
 	};
 
+	const getFiles = async (path: string | undefined, extension: "md") => {
+		let r = await octo.repos
+			.getContent({
+				...gitRepo,
+				path,
+			})
+			.catch((e) => {
+				console.log(e);
+				throw e;
+			})
+			.then(({ data }) => {
+				return data;
+			});
+
+		//@ts-ignore
+		return r.filter(
+			(f: { name: string; type: string }) =>
+				"file" === f.type && f.name.endsWith(`.${extension}`)
+		);
+	};
+
 	return {
 		saveFile,
 		getFile,
+		getFiles,
 	};
 }
 
