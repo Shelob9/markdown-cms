@@ -19,6 +19,8 @@
 		"promises-pipeline": "^1.0.3",
 		"react": "17",
 		"react-dom": "^16.12.0",
+		"react-markdown": "^5.0.2",
+		"react-mde": "^11.0.0",
 		"swr": "^0.3.8",
 		"tailwindcss": "^1.1.4",
 		"ts-jest": "^26.4.3",

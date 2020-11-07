@@ -1,13 +1,9 @@
 import React,{ FC, forwardRef,  useRef } from 'react';
 import CmsLayout from './CmsLayout';
-import { TextInput,TextArea, TextInputProps, TextAreaProps } from './FieldAreas';
+import { TextInput, TextInputProps } from './FieldAreas';
+import MarkdownEditor from './MarkdownEditor';
 
-const ContentField: FC<TextAreaProps> = forwardRef((props, ref) => (<TextArea {...{
-    ...props,
-    required: true,
-}}
-    //@ts-ignore
-    ref={ref} />));
+
 
 const TitleField: FC<TextInputProps> = forwardRef((props, ref) => (
     <TextInput {...{
@@ -27,25 +23,27 @@ export type editorProps = {
     initialPath?: string;
     initialContent?: string;
 };
+
 const Editor : FC<editorProps> = ({onSave,initialPath,initialContent}) => {
     let titleRef = useRef<HTMLInputElement>();
-    let contentRef = useRef<HTMLTextAreaElement>();
     let filePathRef = useRef<HTMLInputElement>();
+    const [content, setContent] = React.useState(initialContent);
+
     return (
         <CmsLayout TopBar={() => (
             <>
                 <button title={'Save'} onClick={() => {
-                onSave({
-                    title: titleRef.current.value,
-                    content: contentRef.current.value,
-                    filePath:filePathRef.current.value
-                });
-            }}>
-                Save
-             </button>
-        </>
+                    onSave({
+                        title: titleRef.current.value,
+                        content,
+                        filePath:filePathRef.current.value
+                    });
+                }}>
+                    Save
+                </button>
+            </>
         )}>
-            
+           
             <TitleField
                 label="Title"
                 ref={titleRef}
@@ -57,12 +55,7 @@ const Editor : FC<editorProps> = ({onSave,initialPath,initialContent}) => {
                 id={'file-name'}
                 defaultValue={initialPath}
             />
-            <ContentField
-                label={'Content'}
-                ref={contentRef}
-                id={'the-content'}
-                defaultValue={initialContent}
-            />
+            <MarkdownEditor value={content} setValue={setContent} /> 
         </CmsLayout>
     )
 }
