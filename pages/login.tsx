@@ -1,10 +1,11 @@
-import React from 'react'
+import Main from '../components/Main'
+
 import { signIn, signOut, useSession } from 'next-auth/client'
 
  function LoginPage() {
   const [ session, loading ] = useSession()
-   console.log(session);
-  return <>
+   
+  return <Main>
     {!session && <>
       Not signed in <br/>
       <button onClick={signIn}>Sign in</button>
@@ -13,7 +14,7 @@ import { signIn, signOut, useSession } from 'next-auth/client'
       Signed in as {session.user.name} <br/>
       <button onClick={signOut}>Sign out</button>
     </>}
-  </>
+  </Main>
 }
 
 export default LoginPage;
