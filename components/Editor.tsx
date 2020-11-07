@@ -1,7 +1,6 @@
 import React,{ FC, forwardRef,  useRef } from 'react';
-import content from '../pages/api/content';
+import CmsLayout from './CmsLayout';
 import { TextInput,TextArea, TextInputProps } from './FieldAreas';
-
 
 const ContentField: FC<TextInputProps> = forwardRef((props, ref) => (<TextArea {...{
     ...props,
@@ -39,8 +38,9 @@ const Editor : FC<editorProps> = ({onSave}) => {
     let contentRef = useRef<HTMLTextAreaElement>();
     let filePathRef = useRef<HTMLInputElement>();
     return (
-        <>
-            <button title={'Save'} onClick={() => {
+        <CmsLayout TopBar={() => (
+            <>
+                <button title={'Save'} onClick={() => {
                 onSave({
                     title: titleRef.current.value,
                     content: contentRef.current.value,
@@ -49,10 +49,13 @@ const Editor : FC<editorProps> = ({onSave}) => {
             }}>
                 Save
              </button>
+                </>
+        )}>
+            
             <TitleField label="Title" ref={titleRef} id={'the-title'} />
             <FileNameField label={'File Name'} ref={filePathRef} id={'file-name'} />
             <ContentField label={'Content'} ref={contentRef} id={'the-content'} />
-        </>
+        </CmsLayout>
     )
 }
 
