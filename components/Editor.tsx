@@ -1,49 +1,12 @@
-import React,{ FC, forwardRef, Ref, useRef } from 'react';
-import { useTextField } from '@react-aria/textfield'
-
-type FieldProps = {
-    label: string;
-    id?: string;
-    ref: Ref<HTMLTextAreaElement|HTMLInputElement>
-}
-const ContentField: FC<FieldProps> = forwardRef((props, ref) => {
-    const { label, id } = props;
-    let { labelProps, inputProps } = useTextField({ label, id },
-        //@ts-ignore
-        ref
-    );
-  
-    return (
-        <div className="field-group">
-            <label {...labelProps}>{label}</label>
-            <textarea
-                {...inputProps}
-                //@ts-ignore
-                ref={ref}
-            />
-        </div>
-    );
-});
+import React,{ FC, forwardRef,  useRef } from 'react';
+import { FieldProps, TextAreadField,TextFieldArea } from './FieldAreas';
 
 
-const TitleField: FC<FieldProps> = forwardRef((props, ref) => {
-    const { label, id } = props;
-    let { labelProps, inputProps } = useTextField({ label, id },
-        //@ts-ignore
-        ref
-    );
-  
-    return (
-        <div className="field-group">
-            <label {...labelProps}>{label}</label>
-            <input
-                {...inputProps}
-                //@ts-ignore
-                ref={ref}
-            />
-        </div>
-    );
-});
+const ContentField: FC<FieldProps> = forwardRef((props, ref) => (<TextFieldArea {...props} ref={ref} />));
+
+const TitleField: FC<FieldProps> = forwardRef((props, ref) => (
+    <TextAreadField {...props} ref={ref} />
+));
 
 export type editorProps = {
     onSave: (title: string, content: string) => void;
