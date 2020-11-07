@@ -29,6 +29,12 @@ describe('Editor', () => {
 
         act(() => {
             fireEvent.change(
+                getByLabelText('File Name'), eventFactory('hi/roy.md')
+            );
+        });
+
+        act(() => {
+            fireEvent.change(
                 getByLabelText('Content'), eventFactory('content')
             );
         });
@@ -40,7 +46,7 @@ describe('Editor', () => {
         });
             
         expect(onSave).toBeCalledTimes(1);
-        expect(onSave).toBeCalledWith('title', 'content');
+        expect(onSave).toBeCalledWith({title:'title', content:'content', fileName: 'hi/roy.md'});
 
             
     });

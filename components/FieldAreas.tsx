@@ -1,15 +1,20 @@
 import { useTextField } from "@react-aria/textfield";
 import React,{ FC, forwardRef, Ref } from "react";
 
-export type FieldProps = {
+export interface FieldProps {
     label: string;
     id?: string;
-    ref: Ref<HTMLTextAreaElement|HTMLInputElement>
+    ref: Ref<HTMLTextAreaElement | HTMLInputElement>,
+    defaultValue?: string;
 }
 
-export const TextFieldArea : FC<FieldProps> = forwardRef((props, ref) => {
-    const { label, id } = props;
-    let { labelProps, inputProps } = useTextField({ label, id },
+interface TextFieldAreaProps extends FieldProps {
+    ref: Ref<HTMLInputElement>,
+}
+
+export const TextFieldArea : FC<TextFieldAreaProps> = forwardRef((props, ref) => {
+    const { label, id,defaultValue } = props;
+    let { labelProps, inputProps } = useTextField({ label, defaultValue,id },
         //@ts-ignore
         ref
     );
@@ -26,9 +31,10 @@ export const TextFieldArea : FC<FieldProps> = forwardRef((props, ref) => {
     );
 });
 
-export const TextAreadField : FC<FieldProps> = forwardRef((props, ref) => {
-    const { label, id } = props;
-    let { labelProps, inputProps } = useTextField({ label, id },
+export const TextInputField : FC<FieldProps> = forwardRef((props, ref) => {
+    const { label, id,defaultValue } = props;
+    let { labelProps, inputProps } = useTextField(
+        { label, defaultValue, id },
         //@ts-ignore
         ref
     );

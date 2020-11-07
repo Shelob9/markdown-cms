@@ -1,11 +1,14 @@
 import React from 'react'
 import App from 'next/app'
 import '../css/tailwind.css'
+import {SSRProvider} from '@react-aria/ssr';
 
 class MyApp extends App {
   render() {
     const { Component, pageProps } = this.props
-    return <Component {...pageProps} />
+    return <SSRProvider>
+      <Component {...pageProps} />
+      </SSRProvider>
   }
 }
 
