@@ -1,18 +1,16 @@
 import { useTextField } from "@react-aria/textfield";
 import React,{ FC, forwardRef, Ref } from "react";
 
-export interface FieldProps {
+
+
+export interface TextInputProps  {
+    ref: Ref<HTMLInputElement>;
     label: string;
     id?: string;
-    ref: Ref<HTMLTextAreaElement | HTMLInputElement>,
     defaultValue?: string;
 }
 
-interface TextFieldAreaProps extends FieldProps {
-    ref: Ref<HTMLInputElement>,
-}
-
-export const TextFieldArea : FC<TextFieldAreaProps> = forwardRef((props, ref) => {
+export const TextInput : FC<TextInputProps> = forwardRef((props, ref) => {
     const { label, id,defaultValue } = props;
     let { labelProps, inputProps } = useTextField({ label, defaultValue,id },
         //@ts-ignore
@@ -22,16 +20,23 @@ export const TextFieldArea : FC<TextFieldAreaProps> = forwardRef((props, ref) =>
     return (
         <div className="field-group">
             <label {...labelProps}>{label}</label>
-            <textarea
+            <input
                 {...inputProps}
-                //@ts-ignore
                 ref={ref}
             />
         </div>
     );
 });
 
-export const TextInputField : FC<FieldProps> = forwardRef((props, ref) => {
+
+export interface TextAreaProps  {
+    ref: Ref<HTMLTextAreaElement>;
+    label: string;
+    id?: string;
+    defaultValue?: string;
+}
+
+export const TextArea : FC<TextAreaProps> = forwardRef((props, ref) => {
     const { label, id,defaultValue } = props;
     let { labelProps, inputProps } = useTextField(
         { label, defaultValue, id },
@@ -44,7 +49,6 @@ export const TextInputField : FC<FieldProps> = forwardRef((props, ref) => {
             <label {...labelProps}>{label}</label>
             <textarea
                 {...inputProps}
-                //@ts-ignore
                 ref={ref}
             />
         </div>

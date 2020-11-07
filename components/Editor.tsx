@@ -1,15 +1,17 @@
 import React,{ FC, forwardRef,  useRef } from 'react';
 import content from '../pages/api/content';
-import { FieldProps, TextInputField,TextFieldArea } from './FieldAreas';
+import { TextInput,TextArea, TextInputProps } from './FieldAreas';
 
 
-const ContentField: FC<FieldProps> = forwardRef((props, ref) => (<TextInputField {...{
+const ContentField: FC<TextInputProps> = forwardRef((props, ref) => (<TextArea {...{
     ...props,
     required: true,
-}} ref={ref} />));
+}}
+    //@ts-ignore
+    ref={ref} />));
 
-const TitleField: FC<FieldProps> = forwardRef((props, ref) => (
-    <TextFieldArea {...{
+const TitleField: FC<TextInputProps> = forwardRef((props, ref) => (
+    <TextInput {...{
         ...props,
         required: true,
     }}
@@ -18,8 +20,8 @@ const TitleField: FC<FieldProps> = forwardRef((props, ref) => (
     />
 ));
 
-const FileNameField : FC<FieldProps> = forwardRef((props, ref) => (
-    <TextFieldArea {...{
+const FileNameField : FC<TextInputProps> = forwardRef((props, ref) => (
+    <TextInput {...{
         ...props,
         required:true,
     }}
@@ -28,8 +30,9 @@ const FileNameField : FC<FieldProps> = forwardRef((props, ref) => (
     />
 ));
 
+export type saveData = { title: string, content: string, filePath: string };
 export type editorProps = {
-    onSave: (update:{ title: string, content: string,filePath:string }) => void;
+    onSave: (update:saveData) => void;
 };
 const Editor : FC<editorProps> = ({onSave}) => {
     let titleRef = useRef<HTMLInputElement>();
