@@ -1,29 +1,35 @@
 
-import React, { Fragment } from 'react';
+import React, { Fragment, useMemo } from 'react';
 import useSWR from 'swr';
 import CmsLayout from '../../components/CmsLayout';
 import Link from 'next/link';
-const fetcher = (url) => {
-    return fetch(url).then(r => r.json());
-}
-const Files = () => {
-    const { data } = useSWR('/api/files', fetcher)
-    let { files } = data;
+import GitApi from '../../lib/GitApi';
+const Files = ({ files }) => {
+    const { data } = useSWR('/api/files',undefined,{initialData:files});
+    let theFiles = useMemo(() => {
+        return data && data.files ? data.files : files;
+    },[data,files])
     return (
         <CmsLayout TopBar={() => <Fragment />}>
-            <ul>
-                {files.map(({name,path}) => (
-                    <li key={`${name}-${path}`}>
-                        <Link href={`/cms/edit?name=${name}&path=${encodeURI(path)}`}>
-                            <a>{path}</a>
-                        </Link>
-                    </li>)
-                )}
-            </ul>
+            {theFiles ? (
+                <ul>
+                    {theFiles.map(({ name, path }) => (
+                        <li key={`${name}-${path}`}>
+                            <Link href={`/cms/edit?name=${name}&path=${encodeURI(path)}`}>
+                                <a>{path}</a>
+                            </Link>
+                        </li>)
+                    )}
+                </ul>) : <div>Loading</div>}
             </CmsLayout>
     );
 }
 
+export async function getStaticProps() {
+	let git = GitApi({ owner: "shelob9", repo: "meadow-foam" }, "master");
+    const files = await git.getFiles(undefined, 'md');
+    return { props: { files } }
+  }
 
 
 export default Files
