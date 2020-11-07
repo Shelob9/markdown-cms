@@ -29,25 +29,25 @@ const FileNameField : FC<FieldProps> = forwardRef((props, ref) => (
 ));
 
 export type editorProps = {
-    onSave: (update:{ title: string, content: string,fileName:string }) => void;
+    onSave: (update:{ title: string, content: string,filePath:string }) => void;
 };
 const Editor : FC<editorProps> = ({onSave}) => {
     let titleRef = useRef<HTMLInputElement>();
     let contentRef = useRef<HTMLTextAreaElement>();
-    let fileNameRef = useRef<HTMLInputElement>();
+    let filePathRef = useRef<HTMLInputElement>();
     return (
         <>
             <button title={'Save'} onClick={() => {
                 onSave({
                     title: titleRef.current.value,
                     content: contentRef.current.value,
-                    fileName:fileNameRef.current.value
+                    filePath:filePathRef.current.value
                 });
             }}>
                 Save
              </button>
             <TitleField label="Title" ref={titleRef} id={'the-title'} />
-            <FileNameField label={'File Name'} ref={fileNameRef} id={'file-name'} />
+            <FileNameField label={'File Name'} ref={filePathRef} id={'file-name'} />
             <ContentField label={'Content'} ref={contentRef} id={'the-content'} />
         </>
     )

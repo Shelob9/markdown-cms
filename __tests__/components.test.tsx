@@ -46,7 +46,7 @@ describe('Editor', () => {
         });
             
         expect(onSave).toBeCalledTimes(1);
-        expect(onSave).toBeCalledWith({title:'title', content:'content', fileName: 'hi/roy.md'});
+        expect(onSave).toBeCalledWith({title:'title', content:'content', filePath: 'hi/roy.md'});
 
             
     });
