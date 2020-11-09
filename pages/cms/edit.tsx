@@ -1,25 +1,13 @@
 import * as React from 'react';
-import Main from '../../components/Main';
 import Editor, { saveData } from '../../components/Editor';
-import { apiRequestUpdateContent } from '../../lib/apiTypes';
+import { useLocalGitApi } from '../../hooks/useLocalGitApi';
 import GitApi from '../../lib/GitApi';
 
-const fetchGitSave = (update: apiRequestUpdateContent) => {
-    return fetch('/api/content', {
-        method: 'POST',
-        body: JSON.stringify(update)
-    }).then(r => r.json())
-        .then(
-        r => {
-            return r;
-        }
-    ).catch(e => {
-        console.log(e);
-        throw e;
-    })
-}
 
-const Edit = ({ name, path,content}) => {
+
+const Edit = ({ name, path, content }) => {
+    const { fetchGitSave } = useLocalGitApi();
+
     const onSave = async (data:saveData) => {
         return fetchGitSave({
             content: data.content,
