@@ -10,12 +10,14 @@ export default async (req: NextApiRequest, res: NextApiResponse) => {
 	let git = GitApi(repo, "master");
 	if ("GET" === req.method) {
 		try {
-			let r = await git.getFile(filePath);
+			console.log(`${req.query.filePath}.md`);
+			let r = await git.getFile(`${req.query.filePath}.md`);
 			res.json({ r });
 			res.setHeader("Content-Type", "application/json");
 			res.setHeader("Cache-Control", "s-maxage=17");
 			return res;
 		} catch (error) {
+			console.log(error);
 			return res.status(500).json({ error });
 		}
 	} else if (["PUT", "POST"].includes(req.method)) {
