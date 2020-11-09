@@ -19,7 +19,7 @@ const Edit = ({ name, path, content }) => {
         })
      }
     return (
-        <Editor onSave={onSave} initialContent={content} initialPath={path} /> 
+        <Editor name={name.replace('.md', '')} onSave={onSave} initialContent={content} initialPath={path} /> 
     )
 }
 
