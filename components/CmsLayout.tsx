@@ -13,7 +13,7 @@ const CmsHeader = () => (
 
         <ul className="flex">
             {navItems.map(({ label, to }) => (
-                <li className="mr-6">
+                <li className="mr-6" key={to}>
                     <Link href={to}>
                         <a className="text-blue-500 hover:text-blue-800" href="#">
                             {label}
