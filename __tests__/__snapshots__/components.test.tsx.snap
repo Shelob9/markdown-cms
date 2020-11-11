@@ -3,7 +3,7 @@
 exports[`Main renders 1`] = `
 <div>
   <main
-    class="flex-auto relative border-t border-gray-200 dark:border-gray-800"
+    class="container mx-auto flex-auto relative border-t border-gray-200 dark:border-gray-800"
   >
     <span>
       Hi Roy
