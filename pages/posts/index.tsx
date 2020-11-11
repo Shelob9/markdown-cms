@@ -4,6 +4,8 @@ import useSWR from 'swr';
 import Link from 'next/link';
 import GitApi from '../../lib/GitApi';
 import Layout from '../../components/Layout/Layout';
+import PostList from '../../components/Layout/PostList';
+import { listItem } from '../../components/Layout/ItemList';
 
 const getPosts = (url) => {
     return fetch(url)
@@ -11,7 +13,6 @@ const getPosts = (url) => {
 }
 const Files = ({ files }) => {
     const { data } = useSWR('/api/files', getPosts, { initialData: files });
-    console.log(data);
     let theFiles = useMemo(() => {
         return data && data.files ? data.files.map(({name,path}) => {
             return {
@@ -20,19 +21,26 @@ const Files = ({ files }) => {
             }
         }) : files;
     }, [data, files]);
-    console.log(data, theFiles);
+
+    let thePosts = useMemo<listItem[]>(() => {
+        return data && data.files ? data.files.map(({ sha, path }) => {
+            path = path.replace('.md', '')
+            let item : listItem = {
+                id: path,
+                title: path,
+                to: `/posts/${path}`,
+                content: '',
+                date: ''
+            }
+            return item;
+        }) : [];
+    }, [data, files]);
     return (
         <>
-            {theFiles ? (
-                <ul>
-                    {theFiles.map(({ name, path }) => (
-                        <li key={`${name}-${path}`}>
-                            <Link href={`/posts/${name}`}>
-                                <a>{path}</a>
-                            </Link>
-                        </li>)
-                    )}
-                </ul>) : <div>Loading</div>}
+            {thePosts ? <PostList
+                posts={thePosts}
+                
+            />: <div>Loading</div>}
         </>
     );
 }
