@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import React, { FC, ReactNode, useEffect } from 'react';
+import React, { FC, ReactNode, useEffect, useRef } from 'react';
 import Cms from './Cms';
 import Main from './Main';
 
@@ -26,9 +26,13 @@ const CmsHeader = () => (
 )
 const CmsLayout: FC<{ children: ReactNode, TopBar: () => JSX.Element }> = ({ children, TopBar }) => {
     
+
     useEffect(() => {
-        document.getElementById('__next')
+        if (document && document.getElementById('__next')) {
+            document.getElementById('__next')
         .setAttribute("style", "width:100%");
+        }
+        
     },[])
 
     return (

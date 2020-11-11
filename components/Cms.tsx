@@ -1,4 +1,5 @@
-import useSWR, { SWRConfig } from 'swr'
+import * as React from 'react';
+import { SWRConfig } from 'swr'
 
 
 export default function CmsState ({children}) {

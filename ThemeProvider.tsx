@@ -1,4 +1,4 @@
-import React, { useState, createContext, useContext, useEffect } from "react";
+import React, { useState, createContext, useContext, useEffect, useRef } from "react";
 
 /**
  * Hook for mananaging theme, currently only dark mode
@@ -15,19 +15,24 @@ const ThemeContext = createContext({
 
 export const ThemeProvider = ({ children }) => {
 	const [darkMode, setDarkMode] = useState(false);
+	const bodyRef = useRef<HTMLBodyElement>();
 	const toggleDarkMode = () => {
-		if (darkMode) {
-			document.getElementsByTagName("BODY")[0].classList.add("mode-dark");
-		} else {
-			document.getElementsByTagName("BODY")[0].classList.remove("mode-dark");
+		if (window && window.document&& document.getElementsByTagName("BODY")) {
+			if (darkMode) {
+				document.getElementsByTagName("BODY")[0].classList.add("mode-dark");
+			} else {
+				document.getElementsByTagName("BODY")[0].classList.remove("mode-dark");
+			}
 		}
 		setDarkMode(!darkMode);
 	};
 	useEffect(() => {
-		if (darkMode) {
-			document.getElementsByTagName("BODY")[0].classList.add("mode-dark");
-		} else {
-			document.getElementsByTagName("BODY")[0].classList.remove("mode-dark");
+		if (window && window.document && document.getElementsByTagName("BODY")) {
+			if (darkMode) {
+				document.getElementsByTagName("BODY")[0].classList.add("mode-dark");
+			} else {
+				document.getElementsByTagName("BODY")[0].classList.remove("mode-dark");
+			}
 		}
 	});
 	return (

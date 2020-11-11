@@ -13,16 +13,28 @@ export interface TextInputProps  {
 
 export const TextInput : FC<TextInputProps> = forwardRef((props, ref) => {
     const { label, id,defaultValue,disabled } = props;
-    let { labelProps, inputProps } = useTextField({ label, defaultValue,id,disabled },
+    let { labelProps, inputProps } = useTextField({ label, defaultValue,id,isDisabled:disabled },
         //@ts-ignore
         ref
     );
   
     return (
         <div className="field-group">
-            <label {...labelProps}>{label}</label>
+            <label
+                {...{
+                    ...labelProps,
+                    htmlFor: id,
+                    id: `${id}-label`
+                }}
+            
+            >
+                {label}
+            </label>
             <input
-                {...inputProps}
+                {...{
+                    ...inputProps, id,
+                    'aria-labelledby': `${id}-label`
+                }}
                 ref={ref}
             />
         </div>

@@ -1,5 +1,27 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
+exports[`ItemSingle matches snapshot 1`] = `
+<div>
+  <div>
+    <div>
+      <h2>
+        <a
+          href="/two"
+        >
+          One Two Time
+        </a>
+      </h2>
+      <a
+        href="/two"
+      >
+        Read More
+      </a>
+    </div>
+    <hr />
+  </div>
+</div>
+`;
+
 exports[`PostList matches snapshot 1`] = `
 <div>
   <section
