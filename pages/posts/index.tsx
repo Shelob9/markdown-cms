@@ -6,6 +6,7 @@ import GitApi from '../../lib/GitApi';
 import Layout from '../../components/Layout/Layout';
 import PostList from '../../components/Layout/PostList';
 import { listItem } from '../../components/Layout/ItemList';
+import ReactMarkdown from 'react-markdown';
 
 const getPosts = (url) => {
     return fetch(url)
@@ -13,14 +14,6 @@ const getPosts = (url) => {
 }
 const Files = ({ files }) => {
     const { data } = useSWR('/api/files', getPosts, { initialData: files });
-    let theFiles = useMemo(() => {
-        return data && data.files ? data.files.map(({name,path}) => {
-            return {
-                name,
-                path: path.replace('.md', '')
-            }
-        }) : files;
-    }, [data, files]);
 
     let thePosts = useMemo<listItem[]>(() => {
         return data && data.files ? data.files.map(({ sha, path }) => {
@@ -39,7 +32,9 @@ const Files = ({ files }) => {
         <>
             {thePosts ? <PostList
                 posts={thePosts}
-                
+                RenderContent={({ post }) => (
+                    <ReactMarkdown source={post.content.slice(0,55)} />
+                )}
             />: <div>Loading</div>}
         </>
     );

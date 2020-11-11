@@ -3,13 +3,21 @@ import React from 'react'
 import { listItem } from './ItemList'
 import ContentSection from './ContentSection'
 import { Heading, P, Div, A, Box } from './primatives'
+import useSWR from 'use-swr'
 
+let fetchPost = async (name) => fetch(`/api/content?filePath=${name}`)
+  .then(r => r.json())
+	.then((r) => {
+		console.log(r);
+    return r.content;
+})
 const Post: React.FC<{
 	hLevel?: 1 | 2 | 3 | 4
 	post: listItem
 	RenderContent?: ({ post: listItem }) => JSX.Element
 }> = ({ post, RenderContent, hLevel }) => {
-	const { title, content, date, to } = post
+	let { data } = useSWR(post.id,fetchPost, { initialData: post });
+	let { title, content, date, to } = data ? data : post;
 	function createMarkup() {
 		return { __html: content }
 	}
