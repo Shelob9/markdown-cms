@@ -56,6 +56,7 @@ const Layout = (props: {
 	description?: string
 	prose?: boolean
 	displaySubtitle?: string
+	headerLinks?:linksList
 }) => {
 	const {
 		children,
@@ -64,6 +65,7 @@ const Layout = (props: {
 		displayTitle,
 		prose,
 		displaySubtitle,
+		headerLinks
 	} = props
 	const innerSize = props.innerSize ? props.innerSize : 728
 	const { darkMode, toggleDarkMode } = useTheme()
@@ -75,7 +77,7 @@ const Layout = (props: {
 			<Provider>
 				<Box className="min-h-screen">
 					<div className={'items-center'}>
-						<Layout.Header />
+						<Layout.Header title={title} links={headerLinks} />
 						<div className="container w-full flex flex-wrap mx-auto px-2 pt-8 sm:pt-4 mt-0">
 							<div className="p-8 pt-2 mt-6 lg:mt-0 text-gray-900 leading-normal  border border-gray-400 border-rounded min-w-full">
 								{displayTitle && (
@@ -104,7 +106,7 @@ const Layout = (props: {
 	)
 }
 
-Layout.Header = (props: { title: string,links:linksList }) => {
+Layout.Header = (props: { title: string,links?:linksList }) => {
     
 	function navToggle() {
 		var btn = document.getElementById('menuBtn')
@@ -151,7 +153,7 @@ Layout.Header = (props: { title: string,links:linksList }) => {
 					id="menu"
 					className="w-full sm:w-auto self-end sm:self-center sm:flex flex-col sm:flex-row items-center h-full py-1 pb-4 sm:py-0 sm:pb-0 hidden"
 				>
-					{props.links.map((link) => (
+					{props.links && props.links.map((link) => (
 						<Link key={link.href} href={link.href}>
 							<a
 								className="text-dark font-bold hover:text-red text-lg w-full no-underline sm:w-auto sm:pr-4 py-2 sm:py-1 sm:pt-2"
@@ -172,7 +174,7 @@ Layout.SEO = ({ title, description }) => (
 
 Layout.Footer = (props: {
     About: () => JSX.Element,
-    socialLinks: linksList
+    socialLinks?: linksList
 }) => {
     const { About,socialLinks } = props;
     return (
@@ -193,7 +195,7 @@ Layout.Footer = (props: {
                                 Social
 						    </Heading>
                             <ul className="list-reset items-center text-sm pt-3">
-                                {socialLinks.map(({ href, label }) => {
+                                {socialLinks && socialLinks.map(({ href, label }) => {
                                     <li key={href}>
                                         <a
                                             className="inline-block text-gray-600 no-underline hover:text-gray-900 hover:underline py-1"
