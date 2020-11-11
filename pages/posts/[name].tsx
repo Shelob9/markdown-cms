@@ -1,8 +1,7 @@
 import GitApi from "../../lib/GitApi";
 import ReactMarkdown from "react-markdown";
-import Main from "../../components/Main";
-import { useState } from "react";
 import useSWR from "use-swr";
+import FrontEndLayout from "../../components/FrontEndLayout";
 
 let fetchPost = async (name) => fetch(`/api/content?filePath=${name}`)
   .then(r => r.json())
@@ -12,9 +11,9 @@ let fetchPost = async (name) => fetch(`/api/content?filePath=${name}`)
 function Post(props) {
   let { data } = useSWR(props.name ? props.name : Error, fetchPost,  { initialData: props.post });
     return (
-        <Main>
+        <FrontEndLayout title={props.post.title}>
             <ReactMarkdown source={data ? data.content : props.post.content} />
-        </Main>
+        </FrontEndLayout>
     )
 }
   

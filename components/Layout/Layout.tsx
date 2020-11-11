@@ -98,7 +98,7 @@ const Layout = (props: {
 								</main>
 							</div>
 						</div>
-						<Layout.Footer />
+					
 					</div>
 				</Box>
 			</Provider>
