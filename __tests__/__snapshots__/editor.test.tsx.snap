@@ -44,12 +44,12 @@ exports[`Editor renders 1`] = `
     >
       <label
         for="file-name"
-        id="react-aria-1900215132-1"
+        id="file-name-label"
       >
         File Name
       </label>
       <input
-        aria-labelledby="react-aria-1900215132-1"
+        aria-labelledby="file-name-label"
         id="file-name"
         type="text"
         value=""

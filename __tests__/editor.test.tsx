@@ -18,27 +18,21 @@ describe('Editor', () => {
         </ThemeProvider>);
         expect(container).toMatchSnapshot();
     });
-    it.skip('calls onSave', () => {
-        let onSave = jest.fn();
-        const { getByLabelText, getByTitle } = render(<ThemeProvider>
-                <Editor onSave={onSave} />
+    it('calls onSave', () => {
+        let saveData;
+        let onSave = (args) => {
+            saveData = args;
+            return new Promise((resolve) => {
+                setTimeout(resolve,100)
+            })
+        }
+        const { getByLabelText, getByTitle,container } = render(<ThemeProvider>
+                <Editor onSave={onSave} initialContent={'content'} />
             </ThemeProvider>)
     
         act(() => {
             fireEvent.change(
-                getByLabelText('Title'), eventFactory('title')
-            );
-        });
-
-        act(() => {
-            fireEvent.change(
                 getByLabelText('File Name'), eventFactory('hi/roy.md')
-            );
-        });
-
-        act(() => {
-            fireEvent.change(
-                getByLabelText('Content'), eventFactory('content')
             );
         });
 
@@ -48,9 +42,7 @@ describe('Editor', () => {
             );
         });
             
-        expect(onSave).toBeCalledTimes(1);
-        expect(onSave).toBeCalledWith({title:'title', content:'content', filePath: 'hi/roy.md'});
-
+        expect(saveData).toMatchObject({content:'content', filePath: 'hi/roy.md'});
             
     });
 });

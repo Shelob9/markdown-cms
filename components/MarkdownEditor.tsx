@@ -68,6 +68,7 @@ const MarkdownEditor: React.FC<markdownEditorProps> = ({value,setValue}) => {
         paste={{
           saveImage: save
         }}
+        class={'the-editor'}
       />
     </div>
   );
