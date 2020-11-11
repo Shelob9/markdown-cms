@@ -1,38 +1,43 @@
-import { apiRequestUpdateContent } from "./../../lib/apiTypes";
-import { getSession } from "next-auth/client";
-import { NextApiRequest, NextApiResponse } from "next";
-import GitApi from "../../lib/GitApi";
+import { apiRequestUpdateContent } from './../../lib/apiTypes'
+import { getSession } from 'next-auth/client'
+import { NextApiRequest, NextApiResponse } from 'next'
+import GitApi from '../../lib/GitApi'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
-	const session = await getSession({ req });
+	const session = await getSession({ req })
 	let { content, filePath, repo }: apiRequestUpdateContent =
-		"GET" == req.method ? req.query : JSON.parse(req.body);
-	let git = GitApi(repo, "master");
-	if ("GET" === req.method) {
+		'GET' == req.method ? req.query : JSON.parse(req.body)
+	repo = repo
+		? repo
+		: {
+				owner: 'shelob9',
+				repo: 'meadow-foam',
+		  }
+	let git = GitApi(repo, 'master')
+	if ('GET' === req.method) {
 		try {
-			console.log(`${req.query.filePath}.md`);
-			let r = await git.getFile(`${req.query.filePath}.md`);
-			res.json({ r });
-			res.setHeader("Content-Type", "application/json");
-			res.setHeader("Cache-Control", "s-maxage=17");
-			return res;
+			let content = await git.getFile(`${req.query.filePath}.md`)
+			res.json({ content })
+			res.setHeader('Content-Type', 'application/json')
+			res.setHeader('Cache-Control', 's-maxage=17')
+			return res
 		} catch (error) {
-			console.log(error);
-			return res.status(500).json({ error });
+			console.log(error)
+			return res.status(500).json({ error })
 		}
-	} else if (["PUT", "POST"].includes(req.method)) {
+	} else if (['PUT', 'POST'].includes(req.method)) {
 		try {
-			let r = await git.saveFile(content, filePath, `Save ${filePath}`);
-			res.json({ r });
+			let r = await git.saveFile(content, filePath, `Save ${filePath}`)
+			res.json({ r })
 
-			return res;
+			return res
 		} catch (error) {
-			console.log(error);
-			return res.status(201).json({ error });
+			console.log(error)
+			return res.status(201).json({ error })
 		}
-	} else if ("DELETE" === req.method) {
+	} else if ('DELETE' === req.method) {
 	} else {
-		throw new Error();
+		throw new Error()
 	}
-	res.status(200).json({ hi: session ? session.user.name : "Roy" });
-};
+	res.status(200).json({ hi: session ? session.user.name : 'Roy' })
+}

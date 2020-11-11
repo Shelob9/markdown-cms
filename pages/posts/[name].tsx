@@ -1,21 +1,19 @@
-import GitApi from "../lib/GitApi";
+import GitApi from "../../lib/GitApi";
 import ReactMarkdown from "react-markdown";
-import Main from "../components/Main";
+import Main from "../../components/Main";
+import { useState } from "react";
 import useSWR from "use-swr";
-import { useLayoutEffect, useState } from "react";
 
-let fetchPost = async (url) => fetch(url).then( r => r.json())
-function Post({ post,name }) {
-    let [content, setContent] = useState(post.content);
-
-    useLayoutEffect(() => {
-        fetchPost(`/api/content?path=${name}`).then((r) => {
-            console.log(r);
-        });
-    });
+let fetchPost = async (name) => fetch(`/api/content?filePath=${name}`)
+  .then(r => r.json())
+  .then((r) => {
+    return r.content;
+})
+function Post(props) {
+  let { data } = useSWR(props.name ? props.name : Error, fetchPost,  { initialData: props.post });
     return (
         <Main>
-            <ReactMarkdown source={content} />
+            <ReactMarkdown source={data ? data.content : props.post.content} />
         </Main>
     )
 }

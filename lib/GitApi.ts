@@ -1,14 +1,14 @@
-import { getOctokit, gitRepoDetails } from "./getOctoKit";
+import { getOctokit, gitRepoDetails } from './getOctoKit'
 import {
 	createBlobForFile,
 	createNewCommit,
 	createNewTree,
 	getCurrentCommit,
 	setBranchToCommit,
-} from "./gitUtil";
+} from './gitUtil'
 
 function GitApi(gitRepo: gitRepoDetails, branch: string) {
-	let octo = getOctokit();
+	let octo = getOctokit()
 	const saveFile = async (
 		content: string,
 		fullFilePath: string,
@@ -18,34 +18,34 @@ function GitApi(gitRepo: gitRepoDetails, branch: string) {
 			octo,
 			...gitRepo,
 			branch,
-		});
+		})
 		let blob = await createBlobForFile({
 			octo,
 			...gitRepo,
 			content,
-		});
+		})
 		let newTree = await createNewTree({
 			octo,
 			...gitRepo,
 			blobs: [blob],
 			paths: [fullFilePath],
 			parentTreeSha: currentCommit.treeSha,
-		});
+		})
 		const newCommit = await createNewCommit({
 			octo,
 			...gitRepo,
 			commitMessage,
 			currentTreeSha: newTree.sha,
 			currentCommitSha: currentCommit.commitSha,
-		});
+		})
 		let commit = await setBranchToCommit({
 			octo,
 			...gitRepo,
 			branch,
 			commitSha: newCommit.sha,
-		});
-		return { commitSha: newCommit.sha };
-	};
+		})
+		return { commitSha: newCommit.sha }
+	}
 
 	const getFile = async (filePath: string): Promise<{ content }> => {
 		return await octo.repos
@@ -54,45 +54,50 @@ function GitApi(gitRepo: gitRepoDetails, branch: string) {
 				path: filePath,
 			})
 			.catch((e) => {
-				return e;
+				return e
 			})
 			.then((result) => {
-				// content will be base64 encoded
-
-				const content = Buffer.from(result.data.content, "base64").toString();
-				if (!content) {
-					return null;
+				if (!result) {
+					return
 				}
-				return { content };
-			});
-	};
+				// content will be base64 encoded
+				const content = Buffer.from(
+					result.data.content,
+					'base64'
+				).toString()
+				if (!content) {
+					return null
+				}
+				return { content }
+			})
+	}
 
-	const getFiles = async (path: string | undefined, extension: "md") => {
+	const getFiles = async (path: string | undefined, extension: 'md') => {
 		let r = await octo.repos
 			.getContent({
 				...gitRepo,
 				path,
 			})
 			.catch((e) => {
-				console.log(e);
-				throw e;
+				console.log(e)
+				throw e
 			})
 			.then(({ data }) => {
-				return data;
-			});
+				return data
+			})
 
 		//@ts-ignore
 		return r.filter(
 			(f: { name: string; type: string }) =>
-				"file" === f.type && f.name.endsWith(`.${extension}`)
-		);
-	};
+				'file' === f.type && f.name.endsWith(`.${extension}`)
+		)
+	}
 
 	return {
 		saveFile,
 		getFile,
 		getFiles,
-	};
+	}
 }
 
-export default GitApi;
+export default GitApi
