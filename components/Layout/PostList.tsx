@@ -8,7 +8,6 @@ import useSWR from 'use-swr'
 let fetchPost = async (name) => fetch(`/api/content?filePath=${name}`)
   .then(r => r.json())
 	.then((r) => {
-		console.log(r);
     return r.content;
 })
 const Post: React.FC<{

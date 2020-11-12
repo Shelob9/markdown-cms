@@ -7,6 +7,7 @@ import Layout from '../../components/Layout/Layout';
 import PostList from '../../components/Layout/PostList';
 import { listItem } from '../../components/Layout/ItemList';
 import ReactMarkdown from 'react-markdown';
+import FrontEndLayout from '../../components/FrontEndLayout';
 
 const getPosts = (url) => {
     return fetch(url)
@@ -29,14 +30,14 @@ const Files = ({ files }) => {
         }) : [];
     }, [data, files]);
     return (
-        <>
+        <FrontEndLayout title={'Posts'}>
             {thePosts ? <PostList
                 posts={thePosts}
                 RenderContent={({ post }) => (
                     <ReactMarkdown source={post.content.slice(0,55)} />
                 )}
             />: <div>Loading</div>}
-        </>
+        </FrontEndLayout>
     );
 }
 

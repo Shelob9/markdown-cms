@@ -30,10 +30,9 @@ const CmsLayout: FC<{ children: ReactNode, TopBar: () => JSX.Element }> = ({ chi
     useEffect(() => {
         if (document && document.getElementById('__next')) {
             document.getElementById('__next')
-        .setAttribute("style", "width:100%");
+                .setAttribute("style", "width:100%");
         }
-        
-    },[])
+    }, []);
 
     return (
         <>

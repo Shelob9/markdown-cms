@@ -130,7 +130,7 @@ Layout.Header = (props: { title: string,links?:linksList }) => {
 							<img
 								src={'/icons/icon-72x72.png'}
 								className={'logo mr-4'}
-								alt={'Impossible Triangle Logo'}
+								alt={'Logo'}
 							/>
 							<Link href={'/'}>
 								<a className="text-gray-900 dark:text-gray-200  no-underline hover:no-underline font-extrabold text-xl lg:pl-4">
