@@ -7,6 +7,10 @@ import {
 	setBranchToCommit,
 } from './gitUtil'
 
+export const getRepos = async () => {
+	return await getOctokit().repos.listForAuthenticatedUser()
+}
+
 function GitApi(gitRepo: gitRepoDetails, branch: string) {
 	let octo = getOctokit()
 	const saveFile = async (
