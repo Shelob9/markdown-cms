@@ -2,17 +2,13 @@ import { apiRequestUpdateContent } from './../../lib/apiTypes'
 import { getSession } from 'next-auth/client'
 import { NextApiRequest, NextApiResponse } from 'next'
 import GitApi from '../../lib/GitApi'
+import getRepo from '../../lib/getRepo'
 
 export default async (req: NextApiRequest, res: NextApiResponse) => {
 	const session = await getSession({ req })
 	let { content, filePath, repo }: apiRequestUpdateContent =
 		'GET' == req.method ? req.query : JSON.parse(req.body)
-	repo = repo
-		? repo
-		: {
-				owner: 'shelob9',
-				repo: 'meadow-foam',
-		  }
+	repo = repo ? repo : getRepo()
 	let git = GitApi(repo, 'master')
 	if ('GET' === req.method) {
 		try {

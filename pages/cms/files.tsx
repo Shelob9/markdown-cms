@@ -4,6 +4,7 @@ import useSWR from 'swr';
 import CmsLayout from '../../components/CmsLayout';
 import Link from 'next/link';
 import GitApi from '../../lib/GitApi';
+import getRepo from '../../lib/getRepo';
 const Files = ({ files }) => {
     const { data } = useSWR('/api/files',undefined,{initialData:files});
     let theFiles = useMemo(() => {
@@ -26,7 +27,8 @@ const Files = ({ files }) => {
 }
 
 export async function getStaticProps() {
-	let git = GitApi({ owner: "shelob9", repo: "meadow-foam" }, "master");
+    let repo = getRepo();
+	let git = GitApi(repo, "master");
     const files = await git.getFiles(undefined, 'md');
     return { props: { files } }
   }

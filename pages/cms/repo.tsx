@@ -4,9 +4,13 @@ import {getRepos} from '../../lib/GitApi';
 
 const Repo: FC<{ repos: selectItems }> = ({ repos }) => {
     let onSave = (repo) => {
-        console.log(repo);
+        let split = repo.label.split('/');
+        console.log({ owner: split[0], repo: split[1] });
      };
-    return <DropdownCombobox items={repos} onSave={onSave} />
+    return <div>
+        <DropdownCombobox items={repos} onSave={onSave} />
+        <p>This does not do anything besides log the selected repo to the console.</p>
+    </div>
 }
 
 export async function getStaticProps() {

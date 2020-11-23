@@ -1,23 +1,18 @@
 import * as React from 'react';
 import Editor, { saveData } from '../../components/Editor';
 import { useLocalGitApi } from '../../hooks/useLocalGitApi';
+import getRepo from '../../lib/getRepo';
 import GitApi from '../../lib/GitApi';
 
-
-
-const Edit = ({ name, path, content }) => {
+const Edit = ({ name, path, content,repo }) => {
     const { fetchGitSave } = useLocalGitApi();
-
     const onSave = async (data:saveData) => {
         return fetchGitSave({
             content: data.content,
             filePath: data.filePath,
-            repo: {
-                owner: 'shelob9',
-                repo: 'meadow-foam'
-            }
-        })
-     }
+            repo
+        });
+    }
     return (
         <Editor name={name.replace('.md', '')} onSave={onSave} initialContent={content} initialPath={path} /> 
     )
@@ -27,7 +22,7 @@ export async function getServerSideProps({ query }) {
 
     let { name, path } = query;
     let content = '';
-    let repo = { owner: "shelob9", repo: "meadow-foam" };
+    let repo = getRepo();
     if (name && path) {
         let git = GitApi(repo, "master");
         try {
@@ -39,7 +34,7 @@ export async function getServerSideProps({ query }) {
         }
     }
     return {
-        props: { name, path,content },
+        props: { name, path,content,repo },
     }
   }
   

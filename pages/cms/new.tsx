@@ -1,7 +1,8 @@
 import * as React from 'react';
 import Editor, { saveData } from '../../components/Editor';
 import { useLocalGitApi } from '../../hooks/useLocalGitApi';
-
+import getRepo from '../../lib/getRepo';
+const repo = getRepo();
 
 const New = () => {
     const { fetchGitSave } = useLocalGitApi();
@@ -9,10 +10,7 @@ const New = () => {
         return fetchGitSave({
             content: data.content,
             filePath: data.filePath,
-            repo: {
-                owner: 'shelob9',
-                repo: 'meadow-foam'
-            }
+            repo
         })
      }
     return (

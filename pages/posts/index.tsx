@@ -8,6 +8,7 @@ import PostList from '../../components/Layout/PostList';
 import { listItem } from '../../components/Layout/ItemList';
 import ReactMarkdown from 'react-markdown';
 import FrontEndLayout from '../../components/FrontEndLayout';
+import getRepo from '../../lib/getRepo';
 
 const getPosts = (url) => {
     return fetch(url)
@@ -42,7 +43,8 @@ const Files = ({ files }) => {
 }
 
 export async function getStaticProps() {
-	let git = GitApi({ owner: "shelob9", repo: "meadow-foam" }, "master");
+    let repo = getRepo();
+	let git = GitApi(repo, "master");
     const files = await git.getFiles(undefined, 'md');
     return { props: { files } }
   }

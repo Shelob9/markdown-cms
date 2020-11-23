@@ -4,6 +4,8 @@ Github-backed markdown CMS.
 
 This is an experiment [Josh](https://joshpress.net) made.
 
+You DO NOT want to deploy this as-is. There is login and authenticatio, but read the source. Proabably anyone could read/ write the repo you deploy this with.
+
 ## Development
 
 - Clone
@@ -16,11 +18,16 @@ creating-a-personal-access-token)
   - `yarn`
 - Start
   - `yarn dev`
+  - [You should see your files here](http://localhost:3202/cms/files)
 - Test
   - `yarn test`
 
 ### Env Variables  
 
+- What repo to use
+  - The API token created in the next step must have read/write permissions for this.
+  - `GIT_REPO_OWNER=shelob9`
+  - `GIT_REPO_REPO=meadow-foam`
 - Github API token
   - [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/)
   - `GITHUB_API_TOKEN`
