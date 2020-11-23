@@ -10,14 +10,28 @@ This is an experiment [Josh](https://joshpress.net) made.
   - `git clone git@github.com:Shelob9/markdown-cms.git`
 - Setup env variables
   - `cp .env.example .env`
-  - [Create a Github app](https://docs.github.com/en/free-pro-team@latest/developers/apps/creating-a-github-app)
-  - [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/creating-a-personal-access-token)
+  - [see next section](#env-variables)
+creating-a-personal-access-token)
 - Install
   - `yarn`
 - Start
   - `yarn dev`
 - Test
   - `yarn test`
+
+### Env Variables  
+
+- Github API token
+  - [Github Personal Access Token](https://docs.github.com/en/free-pro-team@latest/github/authenticating-to-github/)
+  - `GITHUB_API_TOKEN`
+- Next Auth
+  - [Env Varibles](https://next-auth.js.org/configuration/options#environment-variables)
+  - [Github Provider](https://next-auth.js.org/providers/google)
+    - [Create a Github app](https://docs.github.com/en/free-pro-team@latest/developers/apps/creating-a-github-app)
+  - `GITHUB_ID`
+  - `GITHUB_SECRET`
+  - `NEXTAUTH_URL=http://localhost:3202/api/auth`
+  - `JWT_SIGNING_PRIVATE_KEY`
 
 ## Idea and Ideas
 
@@ -26,6 +40,7 @@ The idea here is to create a very simple API and markdown UI for a CMS.
 ### What It Is Built With
 
 - [NextJS]()
+  - [Next Auth](https://next-auth.js.org/)
 - [TailwindCSS]()
 - [TypeScript]()
 - [octokit.js]()

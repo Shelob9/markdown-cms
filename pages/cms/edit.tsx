@@ -27,8 +27,9 @@ export async function getServerSideProps({ query }) {
 
     let { name, path } = query;
     let content = '';
+    let repo = { owner: "shelob9", repo: "meadow-foam" };
     if (name && path) {
-        let git = GitApi({ owner: "shelob9", repo: "meadow-foam" }, "master");
+        let git = GitApi(repo, "master");
         try {
             let file = await git.getFile(path);
             content = file.content;
