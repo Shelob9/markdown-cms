@@ -1,8 +1,8 @@
 # Markdown CMS
 
-Github-backed markdown CMS.
+Github-backed markdown minimalist CMS.
 
-This is an experiment [Josh](https://joshpress.net) made.
+This is an experiment [Josh](https://joshpress.net) made. Really, I was trying to figure out some of NextJs' feature. Might be useful for other things.
 
 You DO NOT want to deploy this as-is. There is login and authenticatio, but read the source. Proabably anyone could read/ write the repo you deploy this with.
 
@@ -42,15 +42,19 @@ creating-a-personal-access-token)
 
 ## Idea and Ideas
 
-The idea here is to create a very simple API and markdown UI for a CMS.
+The idea here is to create a very simple API and markdown UI for a CMS. I added a very basic front-end, but that may have been going too far. I belive it would be best to build this as a few components:
+
+- Content API and types.
+- Markdown editor
+- React hook for consuming content.
+- (maybe) Tailwind CSS blog post/index components
 
 ### What It Is Built With
 
-- [NextJS]()
+- [NextJS](https://nextjs.org/)
   - [Next Auth](https://next-auth.js.org/)
-- [TailwindCSS]()
-- [TypeScript]()
-- [octokit.js]()
+- [TailwindCSS](https://tailwindcss.com/)
+- [TypeScript](https://www.typescriptlang.org/)
+- [octokit.js](https://octokit.github.io/rest.js/v18)
   - [Great article on using Octokit with TypeScript](https://dev.to/lucis/how-to-push-files-programatically-to-a-repository-using-octokit-with-typescript-1nj0) that helped a ton.
 
-### Ideas For Making This Useful
